@@ -1,15 +1,16 @@
 [package]
-name = "onlyone"
+name = "assert_cfg"
 version = "0.1.0"
 edition = "2021"
 
 [features]
 # used in tests
-__foo = []
-__bar = []
-__baz = []
+foo = []
+bar = []
+baz = []
+__test = ["foo", "bar", "baz"]
 
 [dependencies.const_panic]
 version = "0.2.0"
-no-default-features = true
+default-features = false
 
