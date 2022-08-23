@@ -1,0 +1,27 @@
+error[E0080]: evaluation of constant value failed
+  --> tests/main_tests/ui/assert_all_ui_err.rs:13:1
+   |
+13 | / assert_cfg::all!{
+14 | |     feature = "foo",
+15 | |     feature = "bar",
+16 | |     feature = "qux",
+17 | | }
+   | |_^ the evaluated program panicked at '
+too few features are enabled, these need to be enabled:
+- `feature = "qux"`
+', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:13:1
+   |
+   = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0080]: evaluation of constant value failed
+  --> tests/main_tests/ui/assert_all_ui_err.rs:19:1
+   |
+19 | / assert_cfg::all!{
+20 | |     feature = "qux",
+21 | | }
+   | |_^ the evaluated program panicked at '
+too few features are enabled, these need to be enabled:
+- `feature = "qux"`
+', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:19:1
+   |
+   = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)

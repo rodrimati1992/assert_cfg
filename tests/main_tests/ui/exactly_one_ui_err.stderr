@@ -1,0 +1,45 @@
+error[E0080]: evaluation of constant value failed
+ --> tests/main_tests/ui/exactly_one_ui_err.rs:1:1
+  |
+1 | / assert_cfg::exactly_one!{
+2 | |     feature = "std",
+3 | |     feature = "no_std",
+4 | | }
+  | |_^ the evaluated program panicked at '
+no features were enabled, expected one of these to be enabled:
+- `feature = "std"`
+- `feature = "no_std"`
+', $DIR/tests/main_tests/ui/exactly_one_ui_err.rs:1:1
+  |
+  = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0080]: evaluation of constant value failed
+ --> tests/main_tests/ui/exactly_one_ui_err.rs:6:1
+  |
+6 | / assert_cfg::exactly_one!{
+7 | |     feature = "foo",
+8 | |     feature = "bar",
+9 | | }
+  | |_^ the evaluated program panicked at '
+too many features were enabled, only one of them can be enabled:
+- `feature = "foo"`
+- `feature = "bar"`
+', $DIR/tests/main_tests/ui/exactly_one_ui_err.rs:6:1
+  |
+  = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0080]: evaluation of constant value failed
+  --> tests/main_tests/ui/exactly_one_ui_err.rs:11:1
+   |
+11 | / assert_cfg::exactly_one!{
+12 | |     feature = "foo",
+13 | |     feature = "bar",
+14 | |     feature = "qux",
+15 | | }
+   | |_^ the evaluated program panicked at '
+too many features were enabled, only one of them can be enabled:
+- `feature = "foo"`
+- `feature = "bar"`
+', $DIR/tests/main_tests/ui/exactly_one_ui_err.rs:11:1
+   |
+   = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)

@@ -11,7 +11,7 @@ pub const fn assert_none<const LEN: usize>(cfgs: [Cond; LEN]) {
 ///
 /// # Example
 ///
-/// ```
+/// ```compile_fail
 /// assert_cfg::none!{
 ///     feature = "foo",
 ///     feature = "bar",

@@ -2,7 +2,9 @@ use crate::Cond;
 
 #[track_caller]
 pub const fn assert_any<const LEN: usize>(cfgs: [Cond; LEN]) {
-    if Cond::enabled_count(&cfgs) == 0 {
+    if LEN == 0 {
+        panic!("at least one feature is required for this assertion")
+    } else if Cond::enabled_count(&cfgs) == 0 {
         Cond::panic_with_all("\nat least one of these features must be enabled:\n", cfgs)
     }
 }
@@ -13,7 +15,7 @@ pub const fn assert_any<const LEN: usize>(cfgs: [Cond; LEN]) {
 ///
 /// This example demonstrates the error message when not enough features are enabled.
 ///
-/// ```
+/// ```compile_fail
 /// assert_cfg::any!{
 ///     feature = "qux",
 ///     feature = "bob",

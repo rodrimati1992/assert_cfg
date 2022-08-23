@@ -1,0 +1,29 @@
+error[E0080]: evaluation of constant value failed
+ --> tests/main_tests/ui/assert_none_ui_err.rs:1:1
+  |
+1 | / assert_cfg::none!{
+2 | |     feature = "foo",
+3 | |     feature = "bar",
+4 | |     feature = "qux",
+5 | | }
+  | |_^ the evaluated program panicked at '
+these features must be disabled:
+- `feature = "foo"`
+- `feature = "bar"`
+', $DIR/tests/main_tests/ui/assert_none_ui_err.rs:1:1
+  |
+  = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0080]: evaluation of constant value failed
+  --> tests/main_tests/ui/assert_none_ui_err.rs:12:1
+   |
+12 | / assert_cfg::none!{
+13 | |     feature = "foo",
+14 | |     feature = "world",
+15 | | }
+   | |_^ the evaluated program panicked at '
+these features must be disabled:
+- `feature = "foo"`
+', $DIR/tests/main_tests/ui/assert_none_ui_err.rs:12:1
+   |
+   = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)

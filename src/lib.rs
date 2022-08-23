@@ -1,9 +1,9 @@
-//! Static assertions for crate features with informative errors.
+//! Static assertions for crate features, with informative errors.
 //!
 //! The macros from this crate print which specific features are responsible for
 //! the assertion failure.
 //!
-//! # Example
+//! # Examples
 //!
 //! ### Exactly one feature
 //!
@@ -38,8 +38,17 @@
 //! ```
 //!
 //!
+//! # No-std support
+//!
+//! `assert_cfg` is `#![no_std]`, it can be used anywhere Rust can be used.
+//!
+//! # Minimum Supported Rust Version
+//!
+//! This requires Rust 1.57.0, because it uses the `panic` macro in a const context.
 //!
 //!
+//!
+//! [`exactly_one`]: crate::exactly_one
 
 #![no_std]
 
@@ -66,3 +75,7 @@ use crate::condition::Cond;
 
 #[cfg(all(not(feature = "__test"), test))]
 compile_error!(r#"The "__test" feature must be enabled to run tests"#);
+
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+pub struct ReadmeTest;

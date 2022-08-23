@@ -14,3 +14,9 @@ __test = ["foo", "bar", "baz"]
 version = "0.2.0"
 default-features = false
 
+
+[dev-dependencies]
+trybuild = "1.0"
+
+
+
