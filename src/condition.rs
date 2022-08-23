@@ -41,4 +41,20 @@ impl Cond {
 
         const_panic::concat_panic(&[&[PanicVal::write_str(message)], &cfg_list]);
     }
+
+    #[track_caller]
+    pub const fn panic_with_disabled<const LEN: usize>(
+        message: &'static str,
+        cfgs: [Cond; LEN],
+    ) -> ! {
+        let cfg_list = map_to_panicval_array! {cfgs, |ref cfg| {
+            if cfg.enabled {
+                PanicVal::EMPTY
+            } else {
+                PanicVal::write_str(cfg.list_str)
+            }
+        }};
+
+        const_panic::concat_panic(&[&[PanicVal::write_str(message)], &cfg_list]);
+    }
 }

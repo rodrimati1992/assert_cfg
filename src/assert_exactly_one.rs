@@ -9,7 +9,7 @@ pub const fn assert_exactly_one<const LEN: usize>(cfgs: [Cond; LEN]) {
         ),
         1 => (),
         _many => Cond::panic_with_enabled(
-            "\ntoo many features were enabled, only one of them is allowed:\n",
+            "\ntoo many features were enabled, only one of them can be enabled:\n",
             cfgs,
         ),
     }
@@ -71,7 +71,7 @@ pub const fn assert_exactly_one<const LEN: usize>(cfgs: [Cond; LEN]) {
 /// 7 | |     feature = "qux",
 /// 8 | | }
 ///   | |_^ the evaluated program panicked at '
-/// too many features were enabled, only one of them is allowed:
+/// too many features were enabled, only one of them can be enabled:
 /// - `feature = "foo"`
 /// - `feature = "bar"`
 /// ```

@@ -31,7 +31,7 @@
 //! 7 | |     feature = "qux",
 //! 8 | | }
 //!   | |_^ the evaluated program panicked at '
-//! too many features were enabled, only one of them is allowed:
+//! too many features were enabled, only one of them can be enabled:
 //! - `feature = "foo"`
 //! - `feature = "bar"`
 //!
@@ -47,12 +47,19 @@
 pub mod __ {
     pub use core::{cfg, concat};
 
-    pub use crate::{assert_exactly_one::assert_exactly_one, condition::Cond};
+    pub use crate::{
+        assert_all::assert_all, assert_any::assert_any, assert_exactly_one::assert_exactly_one,
+        assert_none::assert_none, condition::Cond,
+    };
 }
 
 #[macro_use]
 mod internal_macros;
+
+mod assert_all;
+mod assert_any;
 mod assert_exactly_one;
+mod assert_none;
 mod condition;
 
 use crate::condition::Cond;
