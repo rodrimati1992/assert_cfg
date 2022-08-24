@@ -7,8 +7,8 @@ license = "Zlib"
 description = "static assertions for crate features, with descriptive errors."
 rust-version = "1.57"
 readme="./README.md"
-keywords = ["no-std"]
-categories = ["no-std"]
+keywords = ["no-std", "cfg", "assert", "assertions"]
+categories = ["no-std", "rust-patterns"]
 repository = "https://github.com/rodrimati1992/assert_cfg/"
 include = [
     "Cargo.toml", 
