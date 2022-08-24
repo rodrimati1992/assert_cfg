@@ -6,14 +6,5 @@ assert_cfg::any!{
 
 assert_cfg::any!{}
 
-assert_cfg::any!{
-    feature = "bar",
-}
-
-assert_cfg::any!{
-    feature = "foo",
-    feature = "baz",
-}
-
 
 fn main(){}

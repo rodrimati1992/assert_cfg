@@ -39,13 +39,9 @@ pub const fn assert_any<const LEN: usize>(cfgs: [Cond; LEN]) {
 /// ```
 #[macro_export]
 macro_rules! any {
-    (
-        $( $ident:ident $( = $feature:expr)? ),*
-        $(,)?
-    ) => {
-        $crate::__priv_call_cfg_fn!{
-            $crate::__::assert_any,
-            $(( $ident $( = $feature)? ))*
-        }
+    ($($args:tt)*) => {
+        const _: () = $crate::__::assert_any(
+            $crate::__priv_make_cond_array!($($args)*)
+        );
     }
 }

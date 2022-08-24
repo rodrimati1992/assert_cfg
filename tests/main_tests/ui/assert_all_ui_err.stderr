@@ -1,27 +1,41 @@
 error[E0080]: evaluation of constant value failed
-  --> tests/main_tests/ui/assert_all_ui_err.rs:13:1
-   |
-13 | / assert_cfg::all!{
-14 | |     feature = "foo",
-15 | |     feature = "bar",
-16 | |     feature = "qux",
-17 | | }
-   | |_^ the evaluated program panicked at '
+ --> tests/main_tests/ui/assert_all_ui_err.rs:1:1
+  |
+1 | / assert_cfg::all!{
+2 | |     feature = "foo",
+3 | |     feature = "bar",
+4 | |     feature = "qux",
+5 | | }
+  | |_^ the evaluated program panicked at '
 too few features are enabled, these need to be enabled:
 - `feature = "qux"`
-', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:13:1
-   |
-   = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:1:1
+  |
+  = note: this error originates in the macro `assert_cfg::all` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0080]: evaluation of constant value failed
-  --> tests/main_tests/ui/assert_all_ui_err.rs:19:1
-   |
-19 | / assert_cfg::all!{
-20 | |     feature = "qux",
-21 | | }
-   | |_^ the evaluated program panicked at '
+ --> tests/main_tests/ui/assert_all_ui_err.rs:7:1
+  |
+7 | / assert_cfg::all!{
+8 | |     feature = "qux",
+9 | | }
+  | |_^ the evaluated program panicked at '
 too few features are enabled, these need to be enabled:
 - `feature = "qux"`
-', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:19:1
+', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:7:1
+  |
+  = note: this error originates in the macro `assert_cfg::all` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0080]: evaluation of constant value failed
+  --> tests/main_tests/ui/assert_all_ui_err.rs:11:1
    |
-   = note: this error originates in the macro `$crate::__priv_call_cfg_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+11 | / assert_cfg::all!{
+12 | |     feature = "bar",
+13 | |     all(feature = "qux"),
+14 | | }
+   | |_^ the evaluated program panicked at '
+too few features are enabled, these need to be enabled:
+- `all (feature = "qux")`
+', $DIR/tests/main_tests/ui/assert_all_ui_err.rs:11:1
+   |
+   = note: this error originates in the macro `assert_cfg::all` (in Nightly builds, run with -Z macro-backtrace for more info)

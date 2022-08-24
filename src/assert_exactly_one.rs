@@ -54,8 +54,8 @@ pub const fn assert_exactly_one<const LEN: usize>(cfgs: [Cond; LEN]) {
 /// ```compile_fail
 /// assert_cfg::exactly_one!{
 ///     feature = "foo",
-///     feature = "bar",
-///     feature = "qux",
+///     not(feature = "qux"),
+///     feature = "hello",
 /// }
 /// ```
 ///
@@ -63,27 +63,26 @@ pub const fn assert_exactly_one<const LEN: usize>(cfgs: [Cond; LEN]) {
 /// the above code produces this compile-time error:
 /// ```text
 /// error[E0080]: evaluation of constant value failed
-///  --> src/lib.rs:38:1
+///  --> src/assert_exactly_one.rs:55:1
 ///   |
 /// 4 | / assert_cfg::exactly_one!{
 /// 5 | |     feature = "foo",
-/// 6 | |     feature = "bar",
-/// 7 | |     feature = "qux",
+/// 6 | |     not(feature = "qux"),
+/// 7 | |     feature = "hello",
 /// 8 | | }
 ///   | |_^ the evaluated program panicked at '
 /// too many features were enabled, only one of them can be enabled:
 /// - `feature = "foo"`
-/// - `feature = "bar"`
+/// - `not (feature = "qux")`
+/// ', src/assert_exactly_one.rs:4:1
+///   |
+///
 /// ```
 #[macro_export]
 macro_rules! exactly_one {
-    (
-        $( $ident:ident $( = $feature:expr)? ),*
-        $(,)?
-    ) => {
-        $crate::__priv_call_cfg_fn!{
-            $crate::__::assert_exactly_one,
-            $(( $ident $( = $feature)? ))*
-        }
+    ($($args:tt)*) => {
+        const _: () = $crate::__::assert_exactly_one(
+            $crate::__priv_make_cond_array!($($args)*)
+        );
     }
 }

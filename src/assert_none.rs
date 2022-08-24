@@ -14,7 +14,7 @@ pub const fn assert_none<const LEN: usize>(cfgs: [Cond; LEN]) {
 /// ```compile_fail
 /// assert_cfg::none!{
 ///     feature = "foo",
-///     feature = "bar",
+///     all(feature = "bar", feature = "baz"),
 ///     feature = "qux",
 /// }
 ///
@@ -24,29 +24,27 @@ pub const fn assert_none<const LEN: usize>(cfgs: [Cond; LEN]) {
 /// the above code produces this compile-time error:
 /// ```text
 /// error[E0080]: evaluation of constant value failed
-///  --> src/assert_none.rs:22:1
+///  --> src/assert_none.rs:15:1
 ///   |
 /// 4 | / assert_cfg::none!{
 /// 5 | |     feature = "foo",
-/// 6 | |     feature = "bar",
+/// 6 | |     all(feature = "bar", feature = "baz"),
 /// 7 | |     feature = "qux",
 /// 8 | | }
 ///   | |_^ the evaluated program panicked at '
 /// these features must be disabled:
 /// - `feature = "foo"`
-/// - `feature = "bar"`
+/// - `all (feature = "bar", feature = "baz")`
 /// ', src/assert_none.rs:4:1
+///   |
+///
 ///
 /// ```
 #[macro_export]
 macro_rules! none {
-    (
-        $( $ident:ident $( = $feature:expr)? ),*
-        $(,)?
-    ) => {
-        $crate::__priv_call_cfg_fn!{
-            $crate::__::assert_none,
-            $(( $ident $( = $feature)? ))*
-        }
+    ($($args:tt)*) => {
+        const _: () = $crate::__::assert_none(
+            $crate::__priv_make_cond_array!($($args)*)
+        );
     }
 }

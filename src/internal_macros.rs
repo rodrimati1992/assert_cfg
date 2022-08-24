@@ -36,22 +36,46 @@ pub(crate) const fn new_panicval_array<T, const LEN: usize>(
 
 #[doc(hidden)]
 #[macro_export]
-macro_rules! __priv_call_cfg_fn {
-    (
-        $func:expr,
-        $(( $($cfg:tt)* ))*
-    ) => {
-        const _: () = {
-            use $crate::__::{Cond, concat, cfg};
+macro_rules! __priv_make_cond_array {
+    ($($args:tt)*) => (
+        $crate::__priv_make_cond_array_inner!([] [$($args)*])
+    )
+}
 
-            $func([
-                $(
-                    Cond {
-                        enabled: cfg!($($cfg)*),
-                        list_str: concat!("- `", stringify!($($cfg)*),"`\n"),
-                    },
-                )*
-            ])
-        };
-    }
+#[doc(hidden)]
+#[macro_export]
+macro_rules! __priv_make_cond_array_inner {
+    (
+        [ $($prev:tt)* ]
+        [ $ident:ident = $feature_eq:expr $(, $($rem:tt)*)? ]
+    ) => {
+        $crate::__priv_make_cond_array_inner!{
+            [$($prev)* ($ident = $feature_eq) ]
+            [$($($rem)*)?]
+        }
+    };
+    (
+        [ $($prev:tt)* ]
+        [ $ident:ident ($($paren:tt)*)  $(, $($rem:tt)*)? ]
+    ) => {
+        $crate::__priv_make_cond_array_inner!{
+            [$($prev)* ($ident($($paren)*)) ]
+            [$($($rem)*)?]
+        }
+    };
+    (
+        [$(( $($cfg:tt)* ))*]
+        []
+    ) => ({
+        use $crate::__::{Cond, concat, cfg};
+
+        [
+            $(
+                Cond {
+                    enabled: cfg!( $($cfg)* ),
+                    list_str: concat!("- `", stringify!($($cfg)*), "`\n"),
+                },
+            )*
+        ]
+    });
 }

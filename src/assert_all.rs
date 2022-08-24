@@ -18,8 +18,7 @@ pub const fn assert_all<const LEN: usize>(cfgs: [Cond; LEN]) {
 ///
 /// ```compile_fail
 /// assert_cfg::all!{
-///     feature = "foo",
-///     feature = "bar",
+///     any(feature = "foo", feature = "bar"),
 ///     feature = "qux",
 /// }
 /// ```
@@ -31,24 +30,22 @@ pub const fn assert_all<const LEN: usize>(cfgs: [Cond; LEN]) {
 ///  --> src/assert_all.rs:20:1
 ///   |
 /// 4 | / assert_cfg::all!{
-/// 5 | |     feature = "foo",
-/// 6 | |     feature = "bar",
-/// 7 | |     feature = "qux",
-/// 8 | | }
+/// 5 | |     any(feature = "foo", feature = "bar"),
+/// 6 | |     feature = "qux",
+/// 7 | | }
 ///   | |_^ the evaluated program panicked at '
 /// too few features are enabled, these need to be enabled:
 /// - `feature = "qux"`
+/// ', src/assert_all.rs:4:1
+///   |
+///
 ///
 /// ```
 #[macro_export]
 macro_rules! all {
-    (
-        $( $ident:ident $( = $feature:expr)? ),*
-        $(,)?
-    ) => {
-        $crate::__priv_call_cfg_fn!{
-            $crate::__::assert_all,
-            $(( $ident $( = $feature)? ))*
-        }
+    ($($args:tt)*) => {
+        const _: () = $crate::__::assert_all(
+            $crate::__priv_make_cond_array!($($args)*)
+        );
     }
 }

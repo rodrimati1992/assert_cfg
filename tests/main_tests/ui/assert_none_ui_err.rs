@@ -1,12 +1,13 @@
 assert_cfg::none!{
     feature = "foo",
     feature = "bar",
-    feature = "qux",
+    feature = "baz",
 }
 
 assert_cfg::none!{
-    feature = "hello",
-    feature = "world",
+    feature = "foo",
+    feature = "bar",
+    feature = "qux",
 }
 
 assert_cfg::none!{
